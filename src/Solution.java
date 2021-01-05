@@ -4,8 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 class ChessClock {
-    int time1 = 0, second1 = 0, minute1 = 0, hour1 = 0;
-    int time2 = 0, second2 = 0, minute2 = 0, hour2 = 0;
+    int time1 = 600000, second1 = 0, minute1 = 10, hour1 = 0;
+    int time2 = 600000, second2 = 0, minute2 = 10, hour2 = 0;
     private static int xOffset = 0, yOffset = 0;
 
     String seconds1=String.format("%02d",second1);
@@ -25,27 +25,31 @@ class ChessClock {
     JFrame frame = new JFrame();
 
     Timer timer1 = new Timer(1000, ev -> {
-        time1+=1000;
+        time1-=1000;
         hour1 = (time1/3600000);
         minute1 = (time1/60000) % 60;
         second1 = (time1/1000) % 60;
         seconds1 = String.format("%02d", second1);
         minutes1 = String.format("%02d", minute1);
         hours1 = String.format("%02d", hour1);
-        start1.setText(hours1+":"+minutes1+":"+seconds1);
+        if(time1>=0) {
+            start1.setText(hours1+":"+minutes1+":"+seconds1);
+        }
     });
     Timer timer2 = new Timer(1000, ev -> {
-        time2+=1000;
+        time2-=1000;
         hour2 = (time2/3600000);
         minute2 = (time2/60000) % 60;
         second2 = (time2/1000) % 60;
         seconds2 = String.format("%02d", second2);
         minutes2 = String.format("%02d", minute2);
         hours2 = String.format("%02d", hour2);
-        start2.setText(hours2+":"+minutes2+":"+seconds2);
+        if(time1>=0) {
+            start2.setText(hours2+":"+minutes2+":"+seconds2);
+        }
     });
 
-    public ChessClock() {
+    public ChessClock(){
         start1.addActionListener(e -> {
             timer1.start();
             timer2.stop();
@@ -81,7 +85,79 @@ class ChessClock {
             String[] fish = {"Fischer", "1", "2", "3", "5"};
 
             JComboBox hour_bar = new JComboBox(hour);
+            if(hour_bar.getSelectedItem() == "1") {
+                hour1 = hour2 = 1;
+                time1 = 3600000;
+            }
+            else if(hour_bar.getSelectedItem() == "2") {
+                hour1 = hour2 = 2;
+                time1 = time2 = 3600000 * 2;
+            }
+            else if(hour_bar.getSelectedItem() == "5") {
+                hour1 = hour2 = 5;
+                time1 = time2 = 3600000 * 4;
+            }
             JComboBox min_bar = new JComboBox(min);
+            if(min_bar.getSelectedItem() == "1") {
+                minute1 = minute2 = 1;
+                if(hour1 != 0) {
+                    time1 += 60000;
+                    time2 += 60000;
+                }
+                else {
+                    time1 = time2 = 60000;
+                }
+            }
+            else if(min_bar.getSelectedItem() == "3") {
+                minute1 = minute2 = 3;
+                if(hour1 != 0) {
+                    time1 += 60000 * 3;
+                    time2 += 60000 * 3;
+                }
+                else {
+                    time1 = time2 = 60000 * 3;
+                }
+            }
+            else if(min_bar.getSelectedItem() == "5") {
+                minute1 = minute2 = 5;
+                if(hour1 != 0) {
+                    time1 += 60000 * 5;
+                    time2 += 60000 * 5;
+                }
+                else {
+                    time1 = time2 = 60000 * 5;
+                }
+            }
+            else if(min_bar.getSelectedItem() == "10") {
+                minute1 = minute2 = 10;
+                if(hour1 != 0) {
+                    time1 += 60000 * 10;
+                    time2 += 60000 * 10;
+                }
+                else {
+                    time1 = time2 = 60000 * 10;
+                }
+            }
+            else if(min_bar.getSelectedItem() == "15") {
+                minute1 = minute2 = 15;
+                if(hour1 != 0) {
+                    time1 += 60000 * 15;
+                    time2 += 60000 * 15;
+                }
+                else {
+                    time1 = time2 = 60000 * 15;
+                }
+            }
+            else if(min_bar.getSelectedItem() == "30") {
+                minute1 = minute2 = 30;
+                if(hour1 != 0) {
+                    time1 += 60000 * 30;
+                    time2 += 60000 * 30;
+                }
+                else {
+                    time1 = time2 = 60000 * 30;
+                }
+            }
             JComboBox fish_bar = new JComboBox(fish);
             JButton done = new JButton("Done");
 
@@ -92,6 +168,17 @@ class ChessClock {
             done.setBounds(165, 275, 70,20);
 
             done.addActionListener(ev -> {
+                String seconds1=String.format("%02d",second1);
+                String minutes1=String.format("%02d",minute1);
+                String hours1=String.format("%02d",hour1);
+
+                String seconds2=String.format("%02d",second2);
+                String minutes2=String.format("%02d",minute2);
+                String hours2=String.format("%02d",hour2);
+
+                start1.setText(hours1+":"+minutes1+":"+seconds1);
+                start2.setText(hours2+":"+minutes2+":"+seconds2);
+
                 frame.setOpacity(1);
                 setting_window.dispose();
             });
@@ -102,6 +189,21 @@ class ChessClock {
             setting_window.add(done);
 
             setting_window.setVisible(true);
+        });
+        reset.addActionListener(e -> {
+            time1 = 600000; second1 = 0; minute1 = 10; hour1 = 0;
+            time2 = 600000; second2 = 0; minute2 = 10; hour2 = 0;
+
+            String seconds1=String.format("%02d",second1);
+            String minutes1=String.format("%02d",minute1);
+            String hours1=String.format("%02d",hour1);
+
+            String seconds2=String.format("%02d",second2);
+            String minutes2=String.format("%02d",minute2);
+            String hours2=String.format("%02d",hour2);
+
+            start1.setText(hours1+":"+minutes1+":"+seconds1);
+            start2.setText(hours2+":"+minutes2+":"+seconds2);
         });
 
         frame.add(start1);
@@ -147,7 +249,6 @@ class ChessClock {
         reset.setBounds(250, 280, 50, 50);
     }
 }
-
 public class Solution {
     public static void main(String[] args) {
         ChessClock s = new ChessClock();
