@@ -50,6 +50,7 @@ class ChessClock {
     });
 
     public ChessClock(){
+        frame.getContentPane().setBackground(Color.lightGray);
         start1.addActionListener(e -> {
             timer1.start();
             timer2.stop();
@@ -235,14 +236,20 @@ class ChessClock {
         start1.setBounds(70, 120, 250, 110);
         start1.setFont(new Font("San Francisco", Font.PLAIN, 20));
         start1.setFocusable(false);
+        start1.setBackground(Color.white);
+        start1.setOpaque(true);
 
         start2.setBounds(70, 380, 250, 110);
         start2.setFont(new Font("San Francisco", Font.PLAIN, 20));
         start2.setFocusable(false);
+        start2.setBackground(Color.white);
+        start2.setOpaque(true);
 
         pause.setBounds(170, 280, 50, 50);
 
         close.setBounds(350, 30, 20, 20);
+        close.setBackground(Color.white);
+        close.setOpaque(true);
 
         settings.setBounds(90, 280, 50, 50);
 
