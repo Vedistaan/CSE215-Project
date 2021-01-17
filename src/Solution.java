@@ -64,17 +64,13 @@ class ChessClock {
     public ChessClock(){
         frame.getContentPane().setBackground(Color.lightGray);
         start1.addActionListener(e -> {
-            if(music.isSelected()) {
-                playSound();
-            }
-            timer1.start();
-            timer2.stop();
+            timer1.stop();
+            timer2.start();
             start2.setSelected(false);
         });
         start2.addActionListener(e -> {
-
-            timer1.stop();
-            timer2.start();
+            timer1.start();
+            timer2.stop();
             start1.setSelected(false);
         });
         pause.addActionListener(e -> {
