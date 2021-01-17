@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
 
 class ChessClock {
     int time1 = 600000, second1 = 0, minute1 = 10, hour1 = 0;
@@ -21,10 +26,14 @@ class ChessClock {
     JToggleButton start2 = new JToggleButton(hours2 + ":" + minutes2 + ":" + seconds2);
     JButton close = new JButton(new ImageIcon("F:\\CSE\\CSE215\\cse\\src\\close.png"));
     JButton settings = new JButton(new ImageIcon("F:\\CSE\\CSE215\\cse\\src\\settings.png"));
+    JToggleButton music = new JToggleButton("Sound");
     JButton reset = new JButton(new ImageIcon("F:\\CSE\\CSE215\\cse\\src\\reset.jpg"));
     JFrame frame = new JFrame();
 
     Timer timer1 = new Timer(1000, ev -> {
+        if(music.isSelected()) {
+            playSound();
+        }
         time1-=1000;
         hour1 = (time1/3600000);
         minute1 = (time1/60000) % 60;
@@ -37,6 +46,9 @@ class ChessClock {
         }
     });
     Timer timer2 = new Timer(1000, ev -> {
+        if(music.isSelected()) {
+            playSound();
+        }
         time2-=1000;
         hour2 = (time2/3600000);
         minute2 = (time2/60000) % 60;
@@ -52,11 +64,15 @@ class ChessClock {
     public ChessClock(){
         frame.getContentPane().setBackground(Color.lightGray);
         start1.addActionListener(e -> {
+            if(music.isSelected()) {
+                playSound();
+            }
             timer1.start();
             timer2.stop();
             start2.setSelected(false);
         });
         start2.addActionListener(e -> {
+
             timer1.stop();
             timer2.start();
             start1.setSelected(false);
@@ -67,9 +83,7 @@ class ChessClock {
             start1.setSelected(false);
             start2.setSelected(false);
         });
-        close.addActionListener(e -> {
-            System.exit(0);
-        });
+        close.addActionListener(e -> System.exit(0));
         settings.addActionListener(e -> {
             JFrame setting_window = new JFrame();
             setting_window.setTitle("Clock Configuration");
@@ -85,7 +99,7 @@ class ChessClock {
             String[] min = {"Minutes", "1", "3", "5", "10", "15", "30"};
             String[] fish = {"Fischer", "1", "2", "3", "5"};
 
-            JComboBox hour_bar = new JComboBox(hour);
+            JComboBox<String> hour_bar = new JComboBox<>(hour);
             if(hour_bar.getSelectedItem() == "1") {
                 hour1 = hour2 = 1;
                 time1 = 3600000;
@@ -98,7 +112,7 @@ class ChessClock {
                 hour1 = hour2 = 5;
                 time1 = time2 = 3600000 * 4;
             }
-            JComboBox min_bar = new JComboBox(min);
+            JComboBox<String> min_bar = new JComboBox<>(min);
             if(min_bar.getSelectedItem() == "1") {
                 minute1 = minute2 = 1;
                 if(hour1 != 0) {
@@ -159,7 +173,7 @@ class ChessClock {
                     time1 = time2 = 60000 * 30;
                 }
             }
-            JComboBox fish_bar = new JComboBox(fish);
+            JComboBox<String> fish_bar = new JComboBox<>(fish);
             JButton done = new JButton("Done");
 
 
@@ -207,6 +221,7 @@ class ChessClock {
             start2.setText(hours2+":"+minutes2+":"+seconds2);
         });
 
+        frame.add(music);
         frame.add(start1);
         frame.add(pause);
         frame.add(start2);
@@ -238,22 +253,45 @@ class ChessClock {
         start1.setFocusable(false);
         start1.setBackground(Color.white);
         start1.setOpaque(true);
+        start1.setBorder(BorderFactory.createEmptyBorder());
 
         start2.setBounds(70, 380, 250, 110);
         start2.setFont(new Font("San Francisco", Font.PLAIN, 20));
         start2.setFocusable(false);
         start2.setBackground(Color.white);
         start2.setOpaque(true);
+        start2.setBorder(BorderFactory.createEmptyBorder());
 
         pause.setBounds(170, 280, 50, 50);
+        pause.setBorder(BorderFactory.createEmptyBorder());
 
         close.setBounds(350, 30, 20, 20);
+        close.setBorder(BorderFactory.createEmptyBorder());
         close.setBackground(Color.white);
         close.setOpaque(true);
 
         settings.setBounds(90, 280, 50, 50);
+        settings.setBorder(BorderFactory.createEmptyBorder());
 
         reset.setBounds(250, 280, 50, 50);
+        reset.setBorder(BorderFactory.createEmptyBorder());
+
+        music.setBounds(240, 550, 70, 20);
+    }
+    public void playSound()
+    {
+        try
+        {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\Vedistaan Windrunner\\Documents\\GitHub\\CSE215-Project\\src\\tick.wav"));
+            Clip clip = AudioSystem.getClip( );
+            clip.open(audioInputStream);
+            clip.start( );
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace( );
+        }
     }
 }
 public class Solution {
