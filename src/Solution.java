@@ -100,79 +100,7 @@ class ChessClock {
             String[] fish = {"Fischer", "1", "2", "3", "5"};
 
             JComboBox<String> hour_bar = new JComboBox<>(hour);
-            if(hour_bar.getSelectedItem() == "1") {
-                hour1 = hour2 = 1;
-                time1 = 3600000;
-            }
-            else if(hour_bar.getSelectedItem() == "2") {
-                hour1 = hour2 = 2;
-                time1 = time2 = 3600000 * 2;
-            }
-            else if(hour_bar.getSelectedItem() == "5") {
-                hour1 = hour2 = 5;
-                time1 = time2 = 3600000 * 4;
-            }
             JComboBox<String> min_bar = new JComboBox<>(min);
-            if(min_bar.getSelectedItem() == "1") {
-                minute1 = minute2 = 1;
-                if(hour1 != 0) {
-                    time1 += 60000;
-                    time2 += 60000;
-                }
-                else {
-                    time1 = time2 = 60000;
-                }
-            }
-            else if(min_bar.getSelectedItem() == "3") {
-                minute1 = minute2 = 3;
-                if(hour1 != 0) {
-                    time1 += 60000 * 3;
-                    time2 += 60000 * 3;
-                }
-                else {
-                    time1 = time2 = 60000 * 3;
-                }
-            }
-            else if(min_bar.getSelectedItem() == "5") {
-                minute1 = minute2 = 5;
-                if(hour1 != 0) {
-                    time1 += 60000 * 5;
-                    time2 += 60000 * 5;
-                }
-                else {
-                    time1 = time2 = 60000 * 5;
-                }
-            }
-            else if(min_bar.getSelectedItem() == "10") {
-                minute1 = minute2 = 10;
-                if(hour1 != 0) {
-                    time1 += 60000 * 10;
-                    time2 += 60000 * 10;
-                }
-                else {
-                    time1 = time2 = 60000 * 10;
-                }
-            }
-            else if(min_bar.getSelectedItem() == "15") {
-                minute1 = minute2 = 15;
-                if(hour1 != 0) {
-                    time1 += 60000 * 15;
-                    time2 += 60000 * 15;
-                }
-                else {
-                    time1 = time2 = 60000 * 15;
-                }
-            }
-            else if(min_bar.getSelectedItem() == "30") {
-                minute1 = minute2 = 30;
-                if(hour1 != 0) {
-                    time1 += 60000 * 30;
-                    time2 += 60000 * 30;
-                }
-                else {
-                    time1 = time2 = 60000 * 30;
-                }
-            }
             JComboBox<String> fish_bar = new JComboBox<>(fish);
             JButton done = new JButton("Done");
 
@@ -183,6 +111,119 @@ class ChessClock {
             done.setBounds(165, 275, 70,20);
 
             done.addActionListener(ev -> {
+                if(hour_bar.getSelectedItem() == "1") {
+                    hour1=hour2=1;
+                    time1=time2=3600000;
+                }
+                else if(hour_bar.getSelectedItem() == "2") {
+                    hour1=hour2=2;
+                    time1=time2=3600000*2;
+                }
+                else if(hour_bar.getSelectedItem() == "5") {
+                    hour1=hour2=5;
+                    time1=time2=3600000*5;
+                }
+                if (min_bar.getSelectedItem() == "1") {
+                    minute1 = minute2 = 1;
+                    if(hour1 != 0 && hour2 != 0) {
+                        time1 += 60000;
+                        time2 += 60000;
+                    }
+                    else {
+                        time1 = time2 = 60000;
+                    }
+                }
+                else if(min_bar.getSelectedItem() == "3") {
+                    minute1 = minute2 = 3;
+                    if(hour1 != 0 && hour2 != 0) {
+                        time1 += 60000 * 3;
+                        time2 += 60000 * 3;
+                    }
+                    else {
+                        time1 = time2 = 60000 * 3;
+                    }
+                }
+                else if(min_bar.getSelectedItem() == "5") {
+                    minute1 = minute2 = 5;
+                    if(hour1 != 0 && hour2 != 0) {
+                        time1 += 60000 * 5;
+                        time2 += 60000 * 5;
+                    }
+                    else {
+                        time1 = time2 = 60000 * 5;
+                    }
+                }
+                else if(min_bar.getSelectedItem() == "10") {
+                    minute1 = minute2 = 10;
+                    if(hour1 != 0 && hour2 != 0) {
+                        time1 += 60000 * 10;
+                        time2 += 60000 * 10;
+                    }
+                    else {
+                        time1 = time2 = 60000 * 10;
+                    }
+                }
+                else if(min_bar.getSelectedItem() == "15") {
+                    minute1 = minute2 = 15;
+                    if(hour1 != 0 && hour2 != 0) {
+                        time1 += 60000 * 15;
+                        time2 += 60000 * 15;
+                    }
+                    else {
+                        time1 = time2 = 60000 * 15;
+                    }
+                }
+                else if(min_bar.getSelectedItem() == "30") {
+                    minute1 = minute2 = 30;
+                    if(hour1 != 0 && hour2 != 0) {
+                        time1 += 60000 * 30;
+                        time2 += 60000 * 30;
+                    }
+                    else {
+                        time1 = time2 = 60000 * 30;
+                    }
+                }
+                if (fish_bar.getSelectedItem() == "1") {
+                    second1 = second2= 1;
+                    if((hour1 == 0 && hour2 == 0) && (minute1 == 0 && minute2 == 0)) {
+                        time1 = time2 = 1000;
+                    }
+                    else {
+                        time1+=1000;
+                        time2+=1000;
+                    }
+                }
+                else if (fish_bar.getSelectedItem() == "2") {
+                    second1 = second2= 2;
+                    if((hour1 == 0 && hour2 == 0) && (minute1 == 0 && minute2 == 0)) {
+                        time1 = time2 = 1000*2;
+                    }
+                    else {
+                        time1+=1000*2;
+                        time2+=1000*2;
+                    }
+                }
+                else if (fish_bar.getSelectedItem() == "3") {
+                    second1 = second2= 3;
+                    if((hour1 == 0 && hour2 == 0) && (minute1 == 0 && minute2 == 0)) {
+                        time1 = time2 = 1000*3;
+                    }
+                    else {
+                        time1+=1000*3;
+                        time2+=1000*3;
+                    }
+                }
+                else if (fish_bar.getSelectedItem() == "5") {
+                    second1 = second2= 5;
+                    if((hour1 == 0 && hour2 == 0) && (minute1 == 0 && minute2 == 0)) {
+                        time1 = time2 = 1000*5;
+                    }
+                    else {
+                        time1+=1000*5;
+                        time2+=1000*5;
+                    }
+                }
+
                 String seconds1=String.format("%02d",second1);
                 String minutes1=String.format("%02d",minute1);
                 String hours1=String.format("%02d",hour1);
